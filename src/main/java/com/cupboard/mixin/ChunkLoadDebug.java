@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 @Mixin(ServerChunkCache.class)
 public abstract class ChunkLoadDebug
 {
-    @Inject(method = "getChunkFutureMainThread", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;getProfiler()Lnet/minecraft/util/profiling/ProfilerFiller;"))
+    @Inject(method = "getChunkFutureMainThread", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerChunkCache;runDistanceManagerUpdates()Z"))
     private void cupboard$logChunkLoading(
       final int chunkX,
       final int chunkZ,
