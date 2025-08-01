@@ -3,6 +3,7 @@ package com.cupboard.mixin;
 import com.cupboard.Cupboard;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.storage.ValueInput;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -41,7 +42,7 @@ public abstract class EntityLoadMixin
     private float xRot;
 
     @Inject(method = "load", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setYBodyRot(F)V", shift = At.Shift.AFTER))
-    private void avoidLoadCrash(final CompoundTag compoundTag, final CallbackInfo ci)
+    private void avoidLoadCrash(final ValueInput compoundTag, final CallbackInfo ci)
     {
         if (!(Double.isFinite(this.getX()) && Double.isFinite(this.getY()) && Double.isFinite(this.getZ())) && Cupboard.config.getCommonConfig().skipErrorOnEntityLoad)
         {
@@ -58,7 +59,7 @@ public abstract class EntityLoadMixin
     }
 
     @Inject(method = "load", at = @At(value = "INVOKE", target = "Lnet/minecraft/CrashReport;forThrowable(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/CrashReport;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void skipLoadingErroringEntity(final CompoundTag compoundTag, final CallbackInfo ci, final Throwable throwable)
+    private void skipLoadingErroringEntity(final ValueInput compoundTag, final CallbackInfo ci, final Throwable throwable)
     {
         if (Cupboard.config.getCommonConfig().skipErrorOnEntityLoad)
         {
