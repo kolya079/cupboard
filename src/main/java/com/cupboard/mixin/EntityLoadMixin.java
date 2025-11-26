@@ -38,8 +38,6 @@ public abstract class EntityLoadMixin
     @Shadow
     public abstract void setYRot(final float p_146923_);
 
-    @Shadow
-    private float xRot;
 
     @Inject(method = "load", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setYBodyRot(F)V", shift = At.Shift.AFTER))
     private void avoidLoadCrash(final ValueInput compoundTag, final CallbackInfo ci)

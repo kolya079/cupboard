@@ -27,7 +27,7 @@ public class Cupboard
     public static       CupboardConfig<CommonConfiguration> config = new CupboardConfig<>(MOD_ID, new CommonConfiguration());
     public static       Random                              rand   = new Random();
 
-    public static boolean IN_DEV = !FMLEnvironment.production;
+    public static boolean IN_DEV = !FMLEnvironment.isProduction();
 
     public Cupboard(IEventBus modEventBus, ModContainer modContainer)
     {
