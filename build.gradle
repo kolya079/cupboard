@@ -68,11 +68,14 @@ java {
     if (JavaVersion.current() < javaVersion) {
         toolchain.languageVersion = JavaVersion.VERSION_21
     }
-    archivesBaseName =  project.archives_base_name + "-fabric"
     withSourcesJar()
 
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
+}
+
+base {
+    archivesName = project.archives_base_name + "-fabric"
 }
 
 
