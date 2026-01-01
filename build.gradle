@@ -17,7 +17,16 @@ version = "${mc_version}-${mod_version}"
 group = "com.${modid}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 repositories {
-    // Add here additional repositories if required by some of the dependencies below.
+    mavenLocal()
+    flatDir { dirs 'libs' }
+    mavenCentral()
+
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 base {
