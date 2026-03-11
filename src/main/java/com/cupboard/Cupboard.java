@@ -4,6 +4,7 @@ import com.cupboard.config.CommonConfiguration;
 import com.cupboard.config.CupboardConfig;
 import com.cupboard.event.EventHandler;
 import com.sun.management.HotSpotDiagnosticMXBean;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -28,6 +29,7 @@ public class Cupboard
     public static       Random                              rand   = new Random();
 
     public static boolean IN_DEV = !FMLEnvironment.production;
+    public static boolean IS_CLIENT_OR_INTEGRATED = FMLEnvironment.dist == Dist.CLIENT;
 
     public Cupboard(IEventBus modEventBus, ModContainer modContainer)
     {
