@@ -1,6 +1,7 @@
 package com.cupboard.config;
 
 import com.cupboard.Cupboard;
+import com.cupboard.compat.ClientConfigCompat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -87,8 +88,8 @@ public class CupboardConfig<C extends ICommonConfig> {
                         }
                         else
                         {
-                            // schedule reload to happen in 10sec, or refresh existing to 10s
-                            scheuledReloads.put(config, 10);
+                            // schedule reload to happen in 7sec, or refresh existing to 7s
+                            scheuledReloads.put(config, 7);
                         }
                     }
                 }
@@ -112,8 +113,8 @@ public class CupboardConfig<C extends ICommonConfig> {
      */
     private C commonConfig;
     private final String filename;
-    private int loaded = 0;
-    private int saveCounter = 0;
+    private       int  loaded      = 0;
+    private       int  saveCounter = 0;
     private final Path configPath;
 
     /**
@@ -160,6 +161,10 @@ public class CupboardConfig<C extends ICommonConfig> {
                 jsonFileData = gson.fromJson(reader, JsonObject.class);
                 commonConfig.deserialize(jsonFileData);
                 Cupboard.LOGGER.info("Loaded config for: " + filename);
+                if (Cupboard.IS_CLIENT_OR_INTEGRATED)
+                {
+                    ClientConfigCompat.onLoad(this);
+                }
             }
             catch (Exception e)
             {
@@ -216,6 +221,10 @@ public class CupboardConfig<C extends ICommonConfig> {
     public C getCommonConfig() {
         if (loaded == 0) {
             load();
+            if (Cupboard.IS_CLIENT_OR_INTEGRATED)
+            {
+                ClientConfigCompat.initCompat(this);
+            }
         }
 
         return commonConfig;
@@ -236,5 +245,15 @@ public class CupboardConfig<C extends ICommonConfig> {
     @Override
     public int hashCode() {
         return configPath.hashCode();
+    }
+
+    public String getFilename()
+    {
+        return filename;
+    }
+
+    public Path getPath()
+    {
+        return configPath;
     }
 }

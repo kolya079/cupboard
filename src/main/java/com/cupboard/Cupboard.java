@@ -4,6 +4,7 @@ import com.cupboard.config.CommonConfiguration;
 import com.cupboard.config.CupboardConfig;
 import com.cupboard.event.EventHandler;
 import com.sun.management.HotSpotDiagnosticMXBean;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -29,6 +30,7 @@ public class Cupboard
     public static       Random                              rand   = new Random();
 
     public static boolean IN_DEV = !FMLEnvironment.production;
+    public static boolean IS_CLIENT_OR_INTEGRATED = FMLEnvironment.dist == Dist.CLIENT;
 
     public Cupboard()
     {

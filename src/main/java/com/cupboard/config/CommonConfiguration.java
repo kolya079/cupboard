@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 public class CommonConfiguration implements ICommonConfig
 {
     public boolean showCommandExecutionErrors = true;
+    public boolean displayConfigReload = true;
     public boolean debugChunkloadAttempts     = false;
     public boolean logOffthreadEntityAdd      = true;
     public boolean skipErrorOnEntityLoad      = false;
@@ -47,6 +48,12 @@ public class CommonConfiguration implements ICommonConfig
         entry4.addProperty("forceHeapDumpOnOOM", forceHeapDumpOnOOM);
         root.add("forceHeapDumpOnOOM", entry4);
 
+        final JsonObject entry6 = new JsonObject();
+        entry6.addProperty("desc:",
+            "Displays a chat message on the client on reloading a config file after changes were detected to the clients config file. default:true");
+        entry6.addProperty("displayConfigReload", displayConfigReload);
+        root.add("displayConfigReload", entry6);
+
         return root;
     }
 
@@ -57,5 +64,6 @@ public class CommonConfiguration implements ICommonConfig
         debugChunkloadAttempts = data.get("debugChunkloadAttempts").getAsJsonObject().get("debugChunkloadAttempts").getAsBoolean();
         logOffthreadEntityAdd = data.get("logOffthreadEntityAdd").getAsJsonObject().get("logOffthreadEntityAdd").getAsBoolean();
         forceHeapDumpOnOOM = data.get("forceHeapDumpOnOOM").getAsJsonObject().get("forceHeapDumpOnOOM").getAsBoolean();
+        displayConfigReload = data.get("displayConfigReload").getAsJsonObject().get("displayConfigReload").getAsBoolean();
     }
 }
