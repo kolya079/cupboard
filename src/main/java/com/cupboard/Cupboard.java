@@ -3,6 +3,7 @@ package com.cupboard;
 import com.cupboard.config.CommonConfiguration;
 import com.cupboard.config.CupboardConfig;
 import com.sun.management.HotSpotDiagnosticMXBean;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -19,6 +20,9 @@ public class Cupboard implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger();
     public static CupboardConfig<CommonConfiguration> config = new CupboardConfig(MOD_ID, new CommonConfiguration());
     public static Random rand = new Random();
+
+    public static boolean IN_DEV                  = FabricLoader.getInstance().isDevelopmentEnvironment();
+    public static boolean IS_CLIENT_OR_INTEGRATED = FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
 
     public Cupboard() {
 

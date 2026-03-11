@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -34,7 +35,7 @@ public abstract class ServerAddEntityMixin
     private void OnaddEntity(Entity entityIn, CallbackInfoReturnable<Boolean> c)
     {
         String current = Thread.currentThread().getName();
-        if (!current.toLowerCase().contains("server"))
+        if (!current.toLowerCase(Locale.ROOT).contains("server"))
         {
             if (Cupboard.config.getCommonConfig().logOffthreadEntityAdd && !warned.contains(entityIn.getType()))
             {

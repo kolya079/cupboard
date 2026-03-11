@@ -12,6 +12,7 @@
     "ThreadingDetectorMixin"
   ],
   "client": [
+    "ConfigScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 0
