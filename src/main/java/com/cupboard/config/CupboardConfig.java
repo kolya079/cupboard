@@ -23,6 +23,8 @@ public class CupboardConfig<C extends ICommonConfig> {
     private final static Map<CupboardConfig, Integer> scheuledReloads = new HashMap<>();
     private static long lastUpdate = 0;
 
+    private static boolean initializedALl = false;
+
     /**
      * Loads all registered configs
      */
@@ -34,6 +36,7 @@ public class CupboardConfig<C extends ICommonConfig> {
                 ClientConfigCompat.initCompat(config);
             }
         }
+        initializedALl = true;
     }
 
     /**
@@ -165,7 +168,7 @@ public class CupboardConfig<C extends ICommonConfig> {
                 jsonFileData = gson.fromJson(reader, JsonObject.class);
                 commonConfig.deserialize(jsonFileData);
                 Cupboard.LOGGER.info("Loaded config for: " + filename);
-                if (Cupboard.IS_CLIENT_OR_INTEGRATED)
+                if (Cupboard.IS_CLIENT_OR_INTEGRATED && initializedALl)
                 {
                     ClientConfigCompat.onLoad(this);
                 }
