@@ -37,7 +37,8 @@ dependencies {
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modApi "com.terraformersmc:modmenu:17.0.0-beta.1"
+    modCompileOnlyApi "com.terraformersmc:modmenu:17.0.0-beta.1"
+    modCompileOnlyApi "curse.maven:catalogue-459701:7328024"
 }
 
 loom {

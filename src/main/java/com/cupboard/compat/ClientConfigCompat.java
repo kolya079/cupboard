@@ -17,6 +17,11 @@ public class ClientConfigCompat
             {
                 ModMenuCompat.setup(config);
             }
+
+            if (FabricLoader.getInstance().isModLoaded("catalogue") && Cupboard.IS_CLIENT_OR_INTEGRATED)
+            {
+                CatalogueCompat.setup(config);
+            }
         }
         catch (Exception e)
         {
