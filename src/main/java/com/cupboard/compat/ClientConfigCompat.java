@@ -1,5 +1,6 @@
 package com.cupboard.compat;
 
+import com.cupboard.Cupboard;
 import com.cupboard.config.CupboardConfig;
 import com.cupboard.config.ICommonConfig;
 import net.minecraft.Util;
@@ -18,7 +19,14 @@ public class ClientConfigCompat
 {
     public static void initCompat(final CupboardConfig config)
     {
-        setupNeoforge(config);
+        try
+        {
+            setupNeoforge(config);
+        }
+        catch (Exception e)
+        {
+            Cupboard.LOGGER.warn("Failed to setup config compatibility: ", e);
+        }
     }
 
     public static <C extends ICommonConfig> void onLoad(final CupboardConfig config)
