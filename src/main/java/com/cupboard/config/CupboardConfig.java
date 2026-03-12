@@ -29,6 +29,10 @@ public class CupboardConfig<C extends ICommonConfig> {
     public static void initloadAll() {
         for (CupboardConfig config : CupboardConfig.allConfigs) {
             config.getCommonConfig();
+            if (Cupboard.IS_CLIENT_OR_INTEGRATED)
+            {
+                ClientConfigCompat.initCompat(config);
+            }
         }
     }
 
@@ -221,10 +225,6 @@ public class CupboardConfig<C extends ICommonConfig> {
     public C getCommonConfig() {
         if (loaded == 0) {
             load();
-            if (Cupboard.IS_CLIENT_OR_INTEGRATED)
-            {
-                ClientConfigCompat.initCompat(this);
-            }
         }
 
         return commonConfig;
