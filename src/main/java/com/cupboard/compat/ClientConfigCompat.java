@@ -33,7 +33,7 @@ public class ClientConfigCompat
     {
         if (Minecraft.getInstance().player != null)
         {
-            Minecraft.getInstance().player.displayClientMessage(Component.literal("Reloaded config: " + config.getFilename()), false);
+            Minecraft.getInstance().player.sendSystemMessage(Component.literal("Reloaded config: " + config.getFilename()));
         }
     }
 
