@@ -1,21 +1,23 @@
 plugins {
-    id 'fabric-loom' version "${loom_version}"
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
     id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
 }
 
-var ENV = System.getenv()
-
-if (ENV.MCMC_BUILD_NUMBER) {
-    version = "${mod_version}.${ENV.MCMC_BUILD_NUMBER}"
-} else {
-    version = project.minecraft_version + "-" + project.mod_version
-}
-
+version = project.minecraft_version + "-" + project.mod_version
 group = project.maven_group
 
 loom {
     accessWidenerPath = file("src/main/resources/${project.archives_base_name}.accessWidener")
+    runs {
+        client {
+            programArg '--username=Dev'
+            programArg '--uuid=c2f44529-eb64-40d0-b970-5ad748c7b377'
+            vmArg '-Dmixin.debug=true'
+        }
+        server {
+            runDir = "runserver"
+        }
+    }
 }
 
 repositories {
@@ -34,58 +36,55 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modCompileOnlyApi "com.terraformersmc:modmenu:17.0.0-beta.1"
-    modCompileOnlyApi "curse.maven:catalogue-459701:7328024"
-}
-
-loom {
-    runs {
-        client {
-            programArg '--username=Dev'
-            programArg '--uuid=ab0bd857-3862-4ad1-b53e-9d76086f2e21'
-            vmArg '-Dmixin.debug=true'
-        }
-        server {
-            runDir = "runserver"
-        }
-    }
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    compileOnly "curse.maven:catalogue-459701:7328024"
+    compileOnly "curse.maven:modmenu-308702:7813924"
 }
 
 processResources {
     inputs.property "version", project.version
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
+        expand "version": inputs.properties.version
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 21
-}
-
-java {
-    def javaVersion = JavaVersion.toVersion(JavaVersion.VERSION_21)
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaVersion.VERSION_21
-    }
-    withSourcesJar()
-
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    it.options.release = 25
 }
 
 base {
-    archivesName = project.archives_base_name + "-fabric"
+    archivesName =  project.archives_base_name + "-fabric"
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
 
+jar {
+    inputs.property "archivesName", project.base.archivesName
+
+    from("LICENSE") {
+        rename { "${it}_${inputs.properties.archivesName}"}
+    }
+}
+
+// configure the maven publication
 publishing {
     publications {
-        register('mavenJava', MavenPublication) {
-            artifact jar
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name
+            from components.java
         }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+        // Add repositories to publish to here.
+        // Notice: This block does NOT have the same function as the block in the top level.
+        // The repositories here will be used for publishing your artifact, not for
+        // retrieving dependencies.
     }
 }
