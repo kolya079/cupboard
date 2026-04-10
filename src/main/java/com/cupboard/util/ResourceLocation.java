@@ -56,6 +56,16 @@ public class ResourceLocation extends Identifier
         return isValidNamespace(string) && isValidPath(string2) ? new ResourceLocation(string, string2) : null;
     }
 
+    public static ResourceLocation ofIdentifier(final Identifier identifier)
+    {
+        if (identifier == null)
+        {
+            return null;
+        }
+
+        return new ResourceLocation(identifier.getNamespace(), identifier.getPath());
+    }
+
     public static ResourceLocation bySeparator(String string, char c)
     {
         int i = string.indexOf(c);
