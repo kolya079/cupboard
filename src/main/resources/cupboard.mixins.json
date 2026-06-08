@@ -3,7 +3,6 @@
   "minVersion": "0.8",
   "package": "com.cupboard.mixin",
   "compatibilityLevel": "JAVA_21",
-  "refmap": "cupboard.refmap.json",
   "mixinPriority": 200,
   "mixins": [
     "ChunkLoadDebug",

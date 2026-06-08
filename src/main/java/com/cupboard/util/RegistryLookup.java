@@ -19,7 +19,7 @@ public class RegistryLookup
 {
     public static ResourceLocation getID(final RegistryAccess registryAccess, final ResourceKey registry, final Object searched)
     {
-        final ResourceLocation identifier = (registryAccess.registryOrThrow(registry).getKey(searched));
+        final ResourceLocation identifier = (registryAccess.lookupOrThrow(registry).getKey(searched));
         return identifier;
     }
 
@@ -35,7 +35,7 @@ public class RegistryLookup
 
     public static <T> Holder<T> getHolder(final RegistryAccess registryAccess, final ResourceKey<? extends Registry<T>> registry, final ResourceLocation id)
     {
-        return registryAccess.registryOrThrow(registry).getHolder(ResourceKey.create(registry, id)).orElse(null);
+        return registryAccess.lookupOrThrow(registry).get(ResourceKey.create(registry, id)).orElse(null);
     }
 
     public static <T> Holder<T> getHolder(final LevelReader level, final ResourceKey<? extends Registry<? extends T>> registry, final ResourceKey<T> id)
@@ -58,7 +58,7 @@ public class RegistryLookup
     public static <T> List<Holder<T>> getHolders(final RegistryAccess registryAccess, final ResourceKey<? extends Registry<? extends T>> registry)
     {
         final List<Holder<T>> holders = new ArrayList<>();
-        for (final Holder<T> holder : registryAccess.registryOrThrow(registry).asHolderIdMap())
+        for (final Holder<T> holder : registryAccess.lookupOrThrow(registry).asHolderIdMap())
         {
             holders.add(holder);
         }
@@ -92,6 +92,6 @@ public class RegistryLookup
     @NotNull
     public static <T> Registry<T> getRegistry(final RegistryAccess registryAccess, final ResourceKey<? extends Registry<T>> registry)
     {
-        return registryAccess.registryOrThrow(registry);
+        return registryAccess.lookupOrThrow(registry);
     }
 }
