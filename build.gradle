@@ -42,11 +42,12 @@ loom {
     runs {
         client {
             programArg '--username=Dev'
-            programArg '--uuid=ab0bd857-3862-4ad1-b53e-9d76086f2e21'
+            programArg '--uuid=c2f44529-eb64-40d0-b970-5ad748c7b377'
             vmArg '-Dmixin.debug=true'
         }
         server {
             runDir = "runserver"
+            vmArg '-Dmixin.debug=true'
         }
     }
 }
@@ -64,10 +65,6 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
-    def javaVersion = JavaVersion.toVersion(JavaVersion.VERSION_21)
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaVersion.VERSION_21
-    }
     archivesBaseName =  project.archives_base_name + "-fabric"
     withSourcesJar()
 
@@ -81,5 +78,12 @@ publishing {
         register('mavenJava', MavenPublication) {
             artifact jar
         }
+    }
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
     }
 }
