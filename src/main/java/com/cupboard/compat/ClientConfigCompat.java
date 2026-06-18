@@ -65,7 +65,7 @@ public class ClientConfigCompat
             bestMatch.registerExtensionPoint(IConfigScreenFactory.class, (container, modListScreen) ->
             {
                 Util.getPlatform().openFile(config.getPath().toFile());
-                return Minecraft.getInstance().screen;
+                return Minecraft.getInstance().gui.screen();
             });
         }
     }
