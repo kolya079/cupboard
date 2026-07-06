@@ -112,9 +112,10 @@ public class CupboardConfig<C extends ICommonConfig> {
      */
     private C commonConfig;
     private final String filename;
-    private int loaded = 0;
-    private int saveCounter = 0;
-    private final Path configPath;
+    private       int    loaded = 0;
+    private       int    saveCounter = 0;
+    private final Path   configPath;
+    private JsonObject previousData = null;
 
     /**
      * Loaded clientside, not synced
@@ -156,6 +157,12 @@ public class CupboardConfig<C extends ICommonConfig> {
             {
 
                 jsonFileData = gson.fromJson(reader, JsonObject.class);
+                if (!manualReload && previousData != null && previousData.equals(jsonFileData))
+                {
+                    return;
+                }
+
+                previousData = jsonFileData;
                 commonConfig.deserialize(jsonFileData);
                 Cupboard.LOGGER.info("Loaded config for: " + filename);
             }
