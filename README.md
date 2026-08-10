@@ -1,6 +1,6 @@
 [curseforge]: https://www.curseforge.com/minecraft/mc-mods/cupboard
 
-# Memory settings
+# Cupboard
 
 [![CurseForge Downloads](https://cf.way2muchnoise.eu/full_326652_downloads.svg)][curseforge] [![Minecraft Versions](https://cf.way2muchnoise.eu/versions/326652.svg)][curseforge] [![Download on CurseForge](https://img.shields.io/badge/Download-CurseForge-F16436?logo=curseforge&logoColor=white)][curseforge]
 
